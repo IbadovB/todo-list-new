@@ -5,6 +5,7 @@ function App() {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
+  const [filter, setFilter] = useState(""); // 👈 yeni filter state
 
   const addTask = () => {
     if (task.trim() === "") return;
@@ -35,59 +36,108 @@ function App() {
 
   const itemsLeft = tasks.filter((t) => !t.completed).length;
 
+  // 🔍 Filter tətbiqi
+  const filteredTasks = tasks.filter((t) => {
+    if (filter === "active") return !t.completed;
+    if (filter === "completed") return t.completed;
+    return true; // "all" olduqda hamısını göstər
+  });
+
+
+  const clearAll = () => {
+  setTasks([]); 
+};
+
   return (
     <div className={`App ${darkMode ? "dark" : "light"}`}>
       <header>
         <h1 className="head-text">Todo List</h1>
+
+        {/* 🌞🌙 düyməsi */}
         <button className="mode-toggle" onClick={() => setDarkMode(!darkMode)}>
           {darkMode ? "🌞" : "🌙"}
         </button>
       </header>
 
-      <div className="input-area">
-        <input
-          type="text"
-          value={task}
-          onChange={(e) => setTask(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="Create a new todo..."
-        />
-      </div>
-
-      <ul>
-        {tasks.map((t, index) => (
-          <li key={index}>
-            <span
-              className={`circle ${t.completed ? "checked" : ""}`}
-              onClick={() => toggleTask(index)}
-            >
-              {t.completed ? "✔" : ""}
-            </span>
-            <span
-              className={`task-text ${t.completed ? "completed" : ""}`}
-              onClick={() => toggleTask(index)}
-            >
-              {t.text}
-            </span>
-            <button className="delete-btn" onClick={() => deleteTask(index)}>
-              ✖
-            </button>
-          </li>
-        ))}
-      </ul>
-
-      <div className="footer">
-        <span>{itemsLeft} item{itemsLeft !== 1 ? "s" : ""} left</span>
-        
-        <div className="options">
-
-          <button className="all-btn">All</button>
-          <button className="active-btn">Active</button>
-          <button className="completed-btn">Completed</button>
+      <div className="task-area">
+        {/* 📝 Input sahəsi */}
+        <div className="input-area">
+          <div className="circle"></div>
+          <input
+            type="text"
+            value={task}
+            onChange={(e) => setTask(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Create a new todo..."
+          />
         </div>
-        <button onClick={clearCompleted} className="clear-btn">
-          Clear Completed
-        </button>
+
+        {/* 🗒️ Task siyahısı */}
+        <ul>
+          {filteredTasks.map((t, index) => (
+            <li key={index}>
+              <span
+                className={`circle ${t.completed ? "checked" : ""}`}
+                onClick={() => toggleTask(index)}
+              >
+                {t.completed ? "✔" : ""}
+              </span>
+              <span
+                className={`task-text ${t.completed ? "completed" : ""}`}
+                onClick={() => toggleTask(index)}
+              >
+                {t.text}
+              </span>
+              <button className="delete-btn" onClick={() => deleteTask(index)}>
+                ✖
+              </button>
+            </li>
+          ))}
+
+          {/* 📦 Footer hissəsi */}
+          <div className="footer">
+            <span>
+              {itemsLeft} item{itemsLeft !== 1 ? "s" : ""} left
+            </span>
+
+            <div className="options">
+              <button
+                className={`all-btn ${
+                  filter === "all" ? "active-filter" : ""
+                }`}
+                onClick={() => setFilter("all")}
+              >
+                All
+              </button>
+
+
+              <button
+                className={`active-btn ${
+                  filter === "active" ? "active-filter" : ""
+                }`}
+                onClick={() => setFilter("active")}
+              >
+                Active
+              </button>
+
+              
+              <button
+                className={`completed-btn ${
+                  filter === "completed" ? "active-filter" : ""
+                }`}
+                onClick={() => setFilter("completed")}
+              >
+                Completed
+              </button>
+            </div>
+
+            <button onClick={clearAll} className="clear-btn">
+              Clear Completed
+            </button>
+          </div>
+        </ul>
+
+        <p>Drag and drop to reorder list</p>
       </div>
     </div>
   );
