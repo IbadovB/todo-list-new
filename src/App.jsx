@@ -5,7 +5,7 @@ function App() {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
-  const [filter, setFilter] = useState(""); // 👈 yeni filter state
+  const [filter, setFilter] = useState(""); 
 
   const addTask = () => {
     if (task.trim() === "") return;
@@ -36,11 +36,11 @@ function App() {
 
   const itemsLeft = tasks.filter((t) => !t.completed).length;
 
-  // 🔍 Filter tətbiqi
+
   const filteredTasks = tasks.filter((t) => {
     if (filter === "active") return !t.completed;
     if (filter === "completed") return t.completed;
-    return true; // "all" olduqda hamısını göstər
+    return true; 
   });
 
 
@@ -50,17 +50,16 @@ function App() {
 
   return (
     <div className={`App ${darkMode ? "dark" : "light"}`}>
-      <header>
+      <header className="flex">
         <h1 className="head-text">Todo List</h1>
 
-        {/* 🌞🌙 düyməsi */}
-        <button className="mode-toggle" onClick={() => setDarkMode(!darkMode)}>
+     
+        <button className="mode-toggle bg-red" onClick={() => setDarkMode(!darkMode)}>
           {darkMode ? "🌞" : "🌙"}
         </button>
       </header>
 
       <div className="task-area">
-        {/* 📝 Input sahəsi */}
         <div className="input-area">
           <div className="circle"></div>
           <input
@@ -72,7 +71,7 @@ function App() {
           />
         </div>
 
-        {/* 🗒️ Task siyahısı */}
+
         <ul>
           {filteredTasks.map((t, index) => (
             <li key={index}>
@@ -94,7 +93,6 @@ function App() {
             </li>
           ))}
 
-          {/* 📦 Footer hissəsi */}
           <div className="footer">
             <span>
               {itemsLeft} item{itemsLeft !== 1 ? "s" : ""} left
