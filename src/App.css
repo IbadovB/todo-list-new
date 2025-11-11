@@ -1,12 +1,5 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 
 .App {
   display: flex;
@@ -15,124 +8,16 @@
 }
 
 
-header {
-  display: flex;
-  gap: 15em;
-  padding: 8em 0 2em 0;
-}
 
-.head-text {
-  color: white;
-  width: 300px;
-  padding: 10px;
-}
-
-
-.mode-toggle {
-  font-size: 1.5em;
-  border: none;
-  cursor: pointer;
-  background: none; 
-  box-shadow: none;
-  outline: none;
-}
-
-.task-area {
-  display: flex;
-  flex-direction: column;
-  gap: 3em;
-  align-items: center;
-  color: inherit;
-  border: none;
-  background: none;
-  padding-bottom: 50px;
-}
-
-.input-area {
-  display: flex;
-  flex-direction: row;
-  gap: 1em;
-  align-items: center;
-  justify-content: center;
-  padding: 18px 200px;
-  border-radius: 5px;
-}
-
-input {
-  border: none;
-  outline: none;
-  width: 100%;
-  color: black;
-}
-
-ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-li {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  padding: 15px 25px;
-  width: 595px;
-}
-
-.circle {
-  width: 10px;
-  height: 10px;
-  border: 2px solid #c8cbe7;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
 
 .checked {
   background: radial-gradient(circle, #55ddff, #c058f3);
   color: #d1d2da;
+
 }
 
-.task-text {
-  flex-grow: 1;
-  text-align: left;
-  cursor: pointer;
-  transition: color 0.3s;
-}
-
-.completed {
-  text-decoration: line-through;
-  color: gray;
-}
-
-.delete-btn {
-  background: transparent;
-  border: none;
-  font-size: 15px;
-  cursor: pointer;
+.delete-btn{
   color: grey;
-}
-
-.delete-btn:hover {
-  transform: scale(1.1);
-}
-
-.footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5em;
-  height: 50px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-  box-shadow: 1px 1px 1px 1px #efeded;
-  width: 595px;
 }
 
 .options {
