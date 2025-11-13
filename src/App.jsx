@@ -5,7 +5,7 @@ function App() {
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
-  const [filter, setFilter] = useState("");
+  const [filter, setFilter] = useState("all");
 
   const addTask = () => {
     if (task.trim() === "") return;
@@ -25,17 +25,15 @@ function App() {
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      addTask();
-    }
+    if (e.key === "Enter") addTask();
   };
 
   const clearCompleted = () => {
     setTasks(tasks.filter((t) => !t.completed));
   };
 
-  const itemsLeft = tasks.filter((t) => !t.completed).length;
 
+  const itemsLeft = tasks.filter((t) => t.completed).length;
 
   const filteredTasks = tasks.filter((t) => {
     if (filter === "active") return !t.completed;
@@ -43,38 +41,26 @@ function App() {
     return true;
   });
 
-
-  const clearAll = () => {
-    setTasks([]);
-  };
-
   return (
     <div className={`App ${darkMode ? "dark" : "light"}`}>
-      <header className="flex align-center gap-120 pt-40 pb-5">
-        <h1 className="head-text text-white text-[1.5em]">T O D O</h1>
-
-
-        <button className="mode-toggle text-[1.5em] 
-        border-none cursor-pointer bg-none  
-        shadow-none  outline-none"
-          onClick={() => setDarkMode(!darkMode)}>
-          {darkMode ? "🌞" : "🌙"}
-        </button>
+      <header>
+        <h1 className="head-text">T O D O</h1>
+        <button
+          className="mode-toggle"
+          onClick={() => setDarkMode(!darkMode)}
+        >
+          {darkMode ? (
+            <img src="/images/moon-solid-full.svg" className="moon" alt="moon"/>
+          ) : (
+            <img src="/images/sunny-day.png" className="sun" alt="sun" />
+          )}
+                 </button>
       </header>
 
-      <div className="task-area flex flex-col gap-[3em] items-center 
-      text-inherit border-none bg-none pb-[50px]">
-        <div className="input-area w-150 flex flex-row  items-center 
-        gap-[2em]  pb-3  pt-3 pl-9 rounded-[5px]">
-
-          <div className="circle p-1.5 
-          border-[2px] border-[#c8cbe7]  
-          rounded-full flex justify-center 
-          items-center cursor-pointer 
-          transition-all duration-300 ease-in-out"></div>
-
-          <input className="border-none 
-          outline-none w-full text-black"
+      <div className="task-area">
+        <div className="input-area">
+          <div className="circle"></div>
+          <input
             type="text"
             value={task}
             onChange={(e) => setTask(e.target.value)}
@@ -83,68 +69,64 @@ function App() {
           />
         </div>
 
-
-        <ul className="list-none   flex flex-col justify-center items-center ">
+        <ul>
           {filteredTasks.map((t, index) => (
-            <li key={index} className="flex justify-center items-center gap-[10px] py-[5px] px-[25px] w-[595px]">
+            <li key={index}>
               <span
-                className={`circle p-1.5  border-[2px] 
-                border-[#c8cbe7] rounded-full flex justify-center 
-                items-center cursor-pointer transition-all 
-                duration-300 ease-in-out ${t.completed ? "checked" : ""}`}
+                className={`circle ${t.completed ? "checked" : ""}`}
                 onClick={() => toggleTask(index)}
               >
-                {t.completed ? "✔" : ""}
+                {t.completed ? (<img src="/images/check-solid-full.svg" className="check" alt="moon"/>) : ""}
               </span>
               <span
-                className={`task-text flex-grow text-left cursor-pointer transition-colors duration-300 text-[15px] ${t.completed ? "completed" : ""}`}
+                className={`task-text ${t.completed ? "completed" : ""}`}
                 onClick={() => toggleTask(index)}
               >
                 {t.text}
               </span>
-              <button className="delete-btn  border-none  
-              text-[25px] cursor-pointer" onClick={() => deleteTask(index)}>
-                x
-              </button>
+              {/* <button><img src="/images/delete.png" className="delete-btn" alt="delete-btn"*/}
+               <button className="delete-btn"
+                onClick={() => deleteTask(index)}> x
+                </button>                
+
             </li>
           ))}
 
-          <div className="footer flex items-center 
-          justify-center gap-[5em] h-[50px] 
-          rounded-b-[5px] shadow-[1px_1px_1px_1px_#efeded] w-[595px]">
+          <div className="footer">
             <span>
               {itemsLeft} item{itemsLeft !== 1 ? "s" : ""} left
             </span>
 
             <div className="options">
               <button
-                className={`all-btn ${filter === "all" ? "active-filter" : ""
-                  }`}
+                className={`all-btn ${
+                  filter === "all" ? "active-filter" : ""
+                }`}
                 onClick={() => setFilter("all")}
               >
                 All
               </button>
 
-
               <button
-                className={`active-btn ${filter === "active" ? "active-filter" : ""
-                  }`}
+                className={`active-btn ${
+                  filter === "active" ? "active-filter" : ""
+                }`}
                 onClick={() => setFilter("active")}
               >
                 Active
               </button>
 
-
               <button
-                className={`completed-btn ${filter === "completed" ? "active-filter" : ""
-                  }`}
+                className={`completed-btn ${
+                  filter === "completed" ? "active-filter" : ""
+                }`}
                 onClick={() => setFilter("completed")}
               >
                 Completed
               </button>
             </div>
 
-            <button onClick={clearAll} className="clear-btn">
+            <button onClick={clearCompleted} className="clear-btn">
               Clear Completed
             </button>
           </div>

@@ -1,110 +1,184 @@
 @import "tailwindcss";
-
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 .App {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @apply flex flex-col items-center;
 }
 
 
+header {
+  @apply flex gap-[17.5em] pt-[8em] pb-[2em];
+}
 
+.head-text { 
+  @apply text-white w-[300px] text-[25px] p-[10px];
+}
+
+
+.mode-toggle { 
+  @apply text-[1.5em] border-none text-white cursor-pointer
+ bg-none shadow-none outline-none;
+}
+
+.sun{
+  @apply  w-[33px] h-[33px] invert brightness-0;
+}
+
+.moon{
+  @apply  w-[33px] h-[33px]  invert brightness-0;
+}
+
+.task-area {
+  @apply flex flex-col gap-[3em] items-center text-inherit 
+  border-none bg-none pb-[50px];
+}
+
+.input-area {
+@apply flex flex-row gap-[2em] items-center 
+w-[610px] h-[65px] pl-[22px] rounded-[5px] bg-[#fff] text-left; 
+}
+
+.input-area .circle{
+  @apply p-[6px]
+}
+
+input {
+ @apply border-none outline-none w-full text-black;
+}
+
+ul {
+@apply list-none flex flex-col justify-center items-center;
+
+}
+
+li {
+@apply flex justify-center items-center 
+gap-[2em] py-[15px] px-[25px] w-[615px];
+}
+
+.circle {
+@apply w-[15px] h-[15px] text-[#fff] text-center
+rounded-full flex justify-center items-center
+cursor-pointer transition-all duration-300 ease-linear;
+}
+
+.circle .completed{
+@apply text-white border-none;
+}
 
 .checked {
-  background: radial-gradient(circle, #55ddff, #c058f3);
-  color: #d1d2da;
-
+  @apply border-none;  
+background: radial-gradient(circle, #55ddff, #c058f3);
 }
 
-.delete-btn{
-  color: grey;
+.check {
+@apply w-[10px] h-[10px] invert brightness-0
+}
+
+.task-text {
+ @apply flex-grow text-left cursor-pointer
+  transition-colors duration-300;
+}
+
+.completed {
+@apply line-through text-gray-500;
+}
+
+.delete-btn { 
+  @apply text-gray-500;
+  font-weight: 500;
+  transform: scaleX(1.6); 
+  display: inline-block; 
+}
+
+.delete-btn:hover {
+@apply scale-100;
+}
+
+.footer {
+@apply flex items-center justify-center gap-[5em] h-[65px] 
+rounded-b-[5px] shadow-[1px_1px_1px_1px_#efeded] w-[615px];
 }
 
 .options {
-  display: flex;
-  align-items: center;
-  gap: 1em;
+  @apply flex items-center gap-4;
 }
 
 .options button,
 .clear-btn {
-  border: none;
-  background: none;
-  font-size: medium;
-  color: gray;
-  cursor: pointer;
+@apply border-none bg-none text-base 
+text-gray-500 cursor-pointer;
 }
 
 .options button:hover {
-  color: blue;
+@apply text-blue-500;
 }
 
 .active-filter {
-  color: #3a7bfd;
-  font-weight: bold;
+@apply text-blue-500 font-bold;
+
 }
 
 .light {
-  background-color: #fff;
-  background-image: url("./images/bg-desktop-light.jpg");
-  background-repeat: no-repeat;
-  background-size: 100%;
-  height: 100vh;
-  color: rgb(112, 111, 111);
+@apply bg-white bg-no-repeat h-screen text-[rgb(112,111,111)];
+background-image: url("./images/bg-desktop-light.jpg");
+background-size: 100%;
 }
 
 .light .input-area {
-  background: #fff;
-  border: 2px solid #efeded;
+@apply bg-white border-[2px] border-[#efeded];
 }
 
+.light .circle{
+  @apply border-1 border-[#C8CBE7]
+}
+
+
 .light input::placeholder {
-  color: #9495a5;
+  @apply text-[#9495a5];
 }
 
 .light li {
-  background: #fff;
-  color: #494c6b;
-  border: 0.5px solid #efeded;
-  box-shadow: 1px 1px 1px 1px #efeded;
+ @apply bg-white text-[#494c6b] border-[0.5px] border-[#efeded] shadow-[1px_1px_1px_1px_#efeded];
+
 }
 
 .light .footer {
-  background: #fff;
-  border: 1px solid #efeded;
-}
+  @apply bg-white border-[1px] border-[#efeded]
+ }
 
 .dark {
-  background-color: #121212;
-  background-image: url("./images/bg-desktop-dark.jpg");
-  background-repeat: no-repeat;
-  background-size: 100%;
-  height: 100vh;
+@apply bg-black bg-no-repeat h-screen;
+background-image: url("./images/bg-desktop-dark.jpg");
+background-size: 100%;
+
 }
 
 .dark .input-area {
-  background: #25273d;
-  border: 2px solid #393a4b;
+@apply bg-[#25273d] border-[2px] border-[#393a4b];
 }
 
 .dark input {
-  background: #25273d;
-  color: #9495a5;
+@apply bg-[#25273d] text-[#fff];
+
+}
+
+.dark .circle{
+  @apply border-1 border-[#393A4B]
 }
 
 .dark ul li {
-  background: #25273d;
-  border-bottom: 1px solid #393a4b;
-  color: #fff;
+ @apply bg-[#25273d] border-b-[1px] border-b-[#393a4b] text-white;
 }
 
 .dark .footer {
-  background: #25273d;
-  color: #5b5e7e;
-  box-shadow: none;
-
+  @apply bg-[#25273d] text-[#5b5e7e] shadow-none
 }
 
 .dark p {
-  color: #5b5e7e;
+  @apply text-[#5b5e7e]
 }
