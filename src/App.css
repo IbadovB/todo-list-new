@@ -104,6 +104,12 @@ background: radial-gradient(circle, #55ddff, #c058f3);
 rounded-b-[5px] shadow-[1px_1px_1px_1px_#efeded] w-[615px];
 }
 
+
+
+.new-options{
+  display: none
+}
+
 .options {
   @apply flex items-center gap-4;
 }
@@ -182,3 +188,84 @@ background-size: 100%;
 .dark p {
   @apply text-[#5b5e7e]
 }
+
+/* Mobile */
+
+@media (max-width: 640px) {
+  
+  header {
+  @apply flex gap-[12em] pt-[10px] pb-[10px];
+}
+
+.head-text { 
+  @apply text-white w-auto text-[15px] ;
+}
+
+
+.mode-toggle { 
+  @apply text-[1.5em] border-none text-white cursor-pointer
+ bg-none shadow-none outline-none;
+}
+
+
+.dark {
+@apply bg-black bg-no-repeat h-screen;
+background-image: url("./images/bg-desktop-dark.jpg");
+background-size: 100% 30%;
+
+}
+
+.light {
+@apply bg-white bg-no-repeat h-screen text-[rgb(112,111,111)];
+background-image: url("./images/bg-desktop-light.jpg");
+background-size: 100% 30%;
+}
+
+  .sun, .moon {
+    @apply w-[20px] h-[20px];
+  }
+
+.task-area {
+  @apply flex flex-col gap-[3em] items-center text-inherit 
+  border-none bg-none pb-[50px];
+}
+
+
+  .input-area {
+@apply flex flex-row gap-[2em] items-center 
+justify-center w-[300px] h-[40px]  rounded-[5px] bg-[#fff] text-left; 
+}
+
+ul {
+@apply list-none flex flex-col justify-center items-center w-[300px];
+
+}
+
+li {
+@apply flex justify-center items-center 
+gap-[2em] py-[7px] px-[25px] w-[300px];
+}
+
+.footer{
+@apply flex items-center justify-center gap-[2em] h-[40px] rounded-none 
+shadow-[1px_1px_1px_1px_#efeded] w-[300px];
+}
+ 
+
+.new-options{
+  display: block;
+  @apply flex items-center justify-center gap-[2em] h-[40px] 
+rounded-b-[5px] shadow-[1px_1px_1px_1px_#efeded] w-[300px];
+}
+.light .new-options {
+  @apply bg-white border-[1px] border-[#efeded] 
+ }
+
+ .dark .new-options {
+  @apply bg-[#25273d] text-[#5b5e7e] shadow-none border-t-[0.5px] border-[#686868]
+}
+.options{
+  display: none;
+}
+}
+

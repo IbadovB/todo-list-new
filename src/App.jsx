@@ -50,11 +50,11 @@ function App() {
           onClick={() => setDarkMode(!darkMode)}
         >
           {darkMode ? (
-            <img src="/images/moon-solid-full.svg" className="moon" alt="moon"/>
+            <img src="/images/moon-solid-full.svg" className="moon" alt="moon" />
           ) : (
             <img src="/images/sunny-day.png" className="sun" alt="sun" />
           )}
-                 </button>
+        </button>
       </header>
 
       <div className="task-area">
@@ -76,7 +76,7 @@ function App() {
                 className={`circle ${t.completed ? "checked" : ""}`}
                 onClick={() => toggleTask(index)}
               >
-                {t.completed ? (<img src="/images/check-solid-full.svg" className="check" alt="moon"/>) : ""}
+                {t.completed ? (<img src="/images/check-solid-full.svg" className="check" alt="moon" />) : ""}
               </span>
               <span
                 className={`task-text ${t.completed ? "completed" : ""}`}
@@ -84,10 +84,10 @@ function App() {
               >
                 {t.text}
               </span>
-              {/* <button><img src="/images/delete.png" className="delete-btn" alt="delete-btn"*/}
-               <button className="delete-btn"
+             
+              <button className="delete-btn"
                 onClick={() => deleteTask(index)}> x
-                </button>                
+              </button>
 
             </li>
           ))}
@@ -99,27 +99,24 @@ function App() {
 
             <div className="options">
               <button
-                className={`all-btn ${
-                  filter === "all" ? "active-filter" : ""
-                }`}
+                className={`all-btn ${filter === "all" ? "active-filter" : ""
+                  }`}
                 onClick={() => setFilter("all")}
               >
                 All
               </button>
 
               <button
-                className={`active-btn ${
-                  filter === "active" ? "active-filter" : ""
-                }`}
+                className={`active-btn ${filter === "active" ? "active-filter" : ""
+                  }`}
                 onClick={() => setFilter("active")}
               >
                 Active
               </button>
 
               <button
-                className={`completed-btn ${
-                  filter === "completed" ? "active-filter" : ""
-                }`}
+                className={`completed-btn ${filter === "completed" ? "active-filter" : ""
+                  }`}
                 onClick={() => setFilter("completed")}
               >
                 Completed
@@ -129,7 +126,37 @@ function App() {
             <button onClick={clearCompleted} className="clear-btn">
               Clear Completed
             </button>
+
           </div>
+
+          
+
+
+              <div className="new-options">
+              <button
+                className={`all-btn ${filter === "all" ? "active-filter" : ""
+                  }`}
+                onClick={() => setFilter("all")}
+              >
+                All
+              </button>
+
+              <button
+                className={`active-btn ${filter === "active" ? "active-filter" : ""
+                  }`}
+                onClick={() => setFilter("active")}
+              >
+                Active
+              </button>
+
+              <button
+                className={`completed-btn ${filter === "completed" ? "active-filter" : ""
+                  }`}
+                onClick={() => setFilter("completed")}
+              >
+                Completed
+              </button>
+            </div>         
         </ul>
 
         <p>Drag and drop to reorder list</p>
