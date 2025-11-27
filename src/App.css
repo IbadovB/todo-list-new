@@ -66,8 +66,9 @@ rounded-full flex justify-center items-center
 cursor-pointer transition-all duration-300 ease-linear;
 }
 
-.circle .completed{
-@apply text-white border-none;
+/*.circle .completed{
+@apply text-white border-none flex justify-center items-center;
+position:relative
 }
 
 .checked {
@@ -77,6 +78,24 @@ background: radial-gradient(circle, #55ddff, #c058f3);
 
 .check {
 @apply w-[10px] h-[10px] invert brightness-0
+}*/
+
+.circle {
+  @apply w-[20px] h-[20px] border border-gray-300 rounded-full 
+  flex items-center justify-center cursor-pointer transition-all duration-300;
+}
+
+.circle.completed {
+  @apply bg-gradient-to-r from-[#55ddff] to-[#c058f3] border-none;
+}
+
+.check {
+  @apply w-[12px] h-[12px] invert;
+}
+
+
+img .check{
+  position:absolute top left;
 }
 
 .task-text {
@@ -105,7 +124,6 @@ rounded-b-[5px] shadow-[1px_1px_1px_1px_#efeded] w-[615px];
 }
 
 
-
 .new-options{
   display: none
 }
@@ -120,12 +138,13 @@ rounded-b-[5px] shadow-[1px_1px_1px_1px_#efeded] w-[615px];
 text-gray-500 cursor-pointer;
 }
 
-.options button:hover {
-@apply text-blue-500;
+.options button:hover,
+.clear-btn:hover {
+@apply text-blue-500 font-bold;
 }
 
 .active-filter {
-@apply text-blue-500 font-bold;
+@apply font-bold;
 
 }
 
@@ -254,7 +273,7 @@ shadow-[1px_1px_1px_1px_#efeded] w-[300px];
 
 .new-options{
   display: block;
-  @apply flex items-center justify-center gap-[2em] h-[40px] 
+  @apply flex items-center justify-center gap-[0.5em] h-[40px] 
 rounded-b-[5px] shadow-[1px_1px_1px_1px_#efeded] w-[300px];
 }
 .light .new-options {
