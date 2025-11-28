@@ -19,4 +19,9 @@ const removeTask = (id) => {
     return axios.delete(`${baseUrl}todo/${id}`);
 }
 
-export { getTodoList, changeStatus, setTask, removeTask };
+const clearCompletedRequest = () => {
+    return axios.post(`${baseUrl}todo/clear-completed`);
+}
+
+
+export { getTodoList, changeStatus, setTask, removeTask, clearCompletedRequest };

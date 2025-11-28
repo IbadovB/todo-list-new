@@ -3,15 +3,14 @@ import "./App.css";
 import { useGetTodoList } from "./hooks/todo/useGetTodoList";
 import TodoFooter from "./components/footer/footer";
 import { useChangeStatus } from "./hooks/todo/useChangeStatus";
-import { setTask, removeTask } from "./api/todo";
+import { setTask, removeTask, clearCompletedRequest } from "./api/todo";
 
 function App() {
-
   const [description, setDescription] = useState("");
-  const [debouncedValue, setDebouncedValue] = useState("");
   const [tasks, setTasks] = useState([]);
   const [darkMode, setDarkMode] = useState(false);
   const [filter, setFilter] = useState("all");
+
   const [loadedTasks] = useGetTodoList();
 
   useEffect(() => {
@@ -19,31 +18,21 @@ function App() {
     if (stored) setDarkMode(JSON.parse(stored));
   }, []);
 
-
   useEffect(() => {
     setTasks(loadedTasks);
   }, [loadedTasks]);
 
-  useEffect(() => {
-    const handler = setTimeout(() => setDebouncedValue(description), 1000);
-    return () => clearTimeout(handler);
-  }, [description]);
-
-  useEffect(() => {
-    if (!debouncedValue) return;
-
-    const addTask = async () => {
+  const handleKeyDown = async (e) => {
+    if (e.key === "Enter" && description.trim()) {
       try {
-        const response = await setTask(debouncedValue);
+        const response = await setTask(description);
         setTasks(prev => [response.data, ...prev]);
         setDescription("");
       } catch (err) {
         console.error("Error adding task:", err);
       }
-    };
-
-    addTask();
-  }, [debouncedValue]);
+    }
+  };
 
   const toggleTask = (task) => {
     setTasks(prev =>
@@ -53,10 +42,8 @@ function App() {
           : t
       )
     );
-
     useChangeStatus(task).catch(err => console.error(err));
   };
-
 
   const deleteTask = async (task) => {
     try {
@@ -68,18 +55,22 @@ function App() {
   };
 
   const clearCompleted = async () => {
-    const completed = tasks.filter(t => t.status === "completed");
-    await Promise.all(completed.map(t => removeTask(t.id)));
-    setTasks(prev => prev.filter(t => t.status !== "completed"));
+    try {
+      await clearCompletedRequest();
+      setTasks(prev => prev.filter(t => t.status !== "completed"));
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  const itemsLeft = tasks.filter(t => t.status === "completed").length;
+  const itemsLeft = tasks.filter(t => t.status === "active").length;
 
   const filteredTasks = tasks.filter(t => {
     if (filter === "active") return t.status === "active";
     if (filter === "completed") return t.status === "completed";
     return true;
   });
+
 
   const changePageMode = (mode) => {
     setDarkMode(mode);
@@ -91,10 +82,7 @@ function App() {
     <div className={`App ${darkMode ? "dark" : "light"}`}>
       <header>
         <h1 className="head-text">T O D O</h1>
-        <button
-          className="mode-toggle"
-          onClick={() => changePageMode(!darkMode)}
-        >
+        <button className="mode-toggle" onClick={() => changePageMode(!darkMode)}>
           {darkMode ? (
             <img src="/images/moon-solid-full.svg" className="moon" alt="moon" />
           ) : (
@@ -109,6 +97,7 @@ function App() {
           <input
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+            onKeyDown={handleKeyDown}
             placeholder="Create a new todo..."
           />
         </div>
@@ -132,12 +121,12 @@ function App() {
                 {task.description}
               </span>
 
-                  <button className="delete-btn" onClick={() => deleteTask(task)}>x</button>
+              <button className="delete-btn" onClick={() => deleteTask(task)}>x</button>
             </li>
           ))}
         </ul>
 
-        <TodoFooter itemsLeft={itemsLeft} filter={filter} setFilter={setFilter} clearCompleted={clearCompleted} tasks={tasks}/>
+        <TodoFooter itemsLeft={itemsLeft} filter={filter} setFilter={setFilter} clearCompleted={clearCompleted} tasks={tasks} />
         <p>Drag and drop to reorder list</p>
       </div>
     </div>
@@ -145,6 +134,12 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
 
 
 {/* ƏVVƏLKİ KODLAŞDIRMA:
